@@ -1,0 +1,39 @@
+#1. Standard Authentication curl format ;  on Git Bash
+curl -X "POST" http://127.0.0.1:8000/api/signup -H 'Content-Type: application/json' -d '{"username":"Manuel","password":"123"}'
+
+
+#2. Basic Authentication curl user b4 TOKEN implementation ;  on Git Bash
+curl http://127.0.0.1:8000/api/todos/ -u 'Manuel:123'
+
+
+#3. Standard Authentication format for user WITH OR WITHOUT TOKEN generated ;  on Git Bash
+
+   # Format for user already authenticated user with TOKEN generated to access user previledges
+   curl http://127.0.0.1:8000/api/todos/ -H 'Authorization:Token b963c4a767cb999dc6f9c0c1cb38f791e144b5a4'
+
+   # Authentication format for user to login or Signup & get a TOKEN
+   curl -X "POST" http://127.0.0.1:8000/api/login -H 'Content-Type: application/json' -d '{"username":"Ada","password":"123"}'
+
+
+# tests;
+
+# Mimi
+curl -X "PUT" http://127.0.0.1:8000/api/todos/6/complete -H 'Authorization:Token b963c4a767cb999dc6f9c0c1cb38f791e144b5a4'
+
+curl -X "GET" http://127.0.0.1:8000/api/todos/ -H 'Authorization:Token b963c4a767cb999dc6f9c0c1cb38f791e144b5a4'
+
+curl -X "GET" http://127.0.0.1:8000/api/todos/completed/ -H 'Authorization:Token b963c4a767cb999dc6f9c0c1cb38f791e144b5a4'
+
+# Adding this: -H 'Content-Type: application/json'  to the above yields same results but must be used at signup 0r Login
+curl -X "GET" http://127.0.0.1:8000/api/todos/completed/ -H 'Content-Type: application/json' -H 'Authorization:Token b963c4a767cb999dc6f9c0c1cb38f791e144b5a4'
+
+# Manuel
+curl -X "PUT" http://127.0.0.1:8000/api/todos/1/complete -H 'Authorization:Token 0a81b0a6a43eb22419e3811a6f0ea9e26cc80197'
+
+curl -X "GET" http://127.0.0.1:8000/api/todos/completed/ -H 'Authorization:Token 0a81b0a6a43eb22419e3811a6f0ea9e26cc80197'
+
+
+# This format must be used to Signup or Login to generate a token for access to other user previledges. 
+curl -X "POST" http://127.0.0.1:8000/api/login -H 'Content-Type: application/json' -d '{"username":"Manuel","password":"123"}'
+
+curl -X "POST" http://127.0.0.1:8000/api/signup -H 'Content-Type: application/json' -d '{"username":"Nuel","password":"123"}'
